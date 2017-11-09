@@ -8,15 +8,23 @@ export default class Appointments extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      appointments: this.props.appointments
+      appointments: this.props.appointments,
+      input_title: 'Some Appointment Title',
+      input_appt_time: 'Tomorrow at 9am'
     };
   }
 
+  handleUserInput (obj) {
+    this.setState(obj);
+  }
+  
   render () {
     return (
       <div>
-	<AppointmentForm />
-	<AppointmentsList appointments={this.state.appointments} />
+	<AppointmentForm input_title={this.state.input_title}
+			 input_appt_time={this.state.input_appt_time}
+			 onUserInput={(obj) => this.handleUserInput(obj)} />
+	  <AppointmentsList appointments={this.state.appointments} />
       </div>
     );
   }
