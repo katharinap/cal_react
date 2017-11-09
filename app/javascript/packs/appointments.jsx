@@ -1,41 +1,67 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import AppointmentForm from './appointment_form';
-import AppointmentsList from './appointments_list';
-// import PropTypes from 'prop-types';
+import React from "react";
+import ReactDOM from "react-dom";
+import AppointmentForm from "./appointment_form";
+import AppointmentsList from "./appointments_list";
+import update from "immutability-helper";
 
 export default class Appointments extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props);
     this.state = {
       appointments: this.props.appointments,
-      input_title: 'Some Appointment Title',
-      input_appt_time: 'Tomorrow at 9am'
+      title: "Some Appointment Title",
+      appt_time: "Tomorrow at 9am"
     };
   }
 
-  handleUserInput (obj) {
+  handleUserInput(obj) {
     this.setState(obj);
   }
-  
-  render () {
+
+  handleFormSubmit() {
+    const appointment = {
+      title: this.state.title,
+      appt_time: this.state.appt_time
+    };
+    $.post("/appointments", { appointment: appointment }).done(
+      function(data) {
+        this.addNewAppointment(data);
+      }.bind(this)
+    );
+  }
+
+  addNewAppointment(appointment) {
+    const appointments = update(this.state.appointments, {
+      $push: [appointment]
+    });
+    this.setState({
+      appointments: appointments.sort(function(a, b) {
+        return new Date(a.appt_time) - new Date(b.appt_time);
+      })
+    });
+  }
+
+  render() {
     return (
       <div>
-	<AppointmentForm input_title={this.state.input_title}
-			 input_appt_time={this.state.input_appt_time}
-			 onUserInput={(obj) => this.handleUserInput(obj)} />
-	  <AppointmentsList appointments={this.state.appointments} />
+        <AppointmentForm
+          title={this.state.title}
+          appt_time={this.state.appt_time}
+          onUserInput={obj => this.handleUserInput(obj)}
+          onFormSubmit={() => this.handleFormSubmit()}
+        />
+        <AppointmentsList appointments={this.state.appointments} />
       </div>
     );
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const node = document.getElementById('appointments_data');
-  const data = JSON.parse(node.getAttribute('data'));
+document.addEventListener("DOMContentLoaded", () => {
+  const node = document.getElementById("appointments_data");
+  const data = JSON.parse(node.getAttribute("data"));
 
   ReactDOM.render(
     <Appointments appointments={data} />,
-    document.body.appendChild(document.createElement('div')),
-  )
-})
+    document.body.appendChild(document.createElement("div"))
+  );
+});
