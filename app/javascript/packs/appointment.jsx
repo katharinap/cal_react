@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import moment from "moment";
+import { formatDate } from "./utils";
 
-const Appointment = ({appointment}) => 
-  <div className='appointment'>
+const Appointment = ({ appointment }) => (
+  <div className="appointment">
     <h3>{appointment.title}</h3>
-    <p>{appointment.appt_time}</p>
-  </div>;
+    <p>{formatDate(appointment.appt_time)}</p>
+  </div>
+);
 
 export default Appointment;
