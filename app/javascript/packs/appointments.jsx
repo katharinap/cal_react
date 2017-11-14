@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import axios from "axios";
 import AppointmentForm from "./appointment_form";
 import AppointmentsList from "./appointments_list";
 import update from "immutability-helper";
@@ -23,11 +24,16 @@ export default class Appointments extends React.Component {
       title: this.state.title,
       appt_time: this.state.appt_time
     };
-    $.post("/appointments", { appointment: appointment }).done(
-      function(data) {
-        this.addNewAppointment(data);
-      }.bind(this)
-    );
+    axios({
+      method: "POST",
+      url: "/appointments",
+      data: { appointment: appointment },
+      headers: {
+        "X-CSRF-Token": document.querySelector("meta[name=csrf-token]").content
+      }
+    }).then(data => {
+      this.addNewAppointment(data["data"]);
+    });
   }
 
   addNewAppointment(appointment) {
