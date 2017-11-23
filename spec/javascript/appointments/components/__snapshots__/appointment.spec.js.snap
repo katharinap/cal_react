@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Render appointment 1`] = `
+<div
+  className="appointment"
+>
+  <h3>
+    My Appointment
+  </h3>
+  <p>
+    November 22 2017, 7:00 pm
+  </p>
+</div>
+`;
