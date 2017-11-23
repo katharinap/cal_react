@@ -7,12 +7,10 @@ AllCops:
     - 'db/fixtures/**/*'
     - 'tmp/**/*'
     - 'bin/**/*'
-    - 'test/**/*'
 
 Style/Documentation:
   Exclude:
     - 'spec/**/*'
-    - 'test/**/*'
     - 'app/controllers/*_controller.rb'
     - 'app/helpers/*_helper.rb'
     - 'app/mailers/*_mailer.rb'
