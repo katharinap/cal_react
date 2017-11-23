@@ -1,0 +1,27 @@
+AllCops:
+  DisplayCopNames: true
+  DisplayStyleGuide: false
+  Exclude:
+    - 'node_modules/**/*'
+    - 'db/**/*'
+    - 'db/fixtures/**/*'
+    - 'tmp/**/*'
+    - 'bin/**/*'
+    - 'test/**/*'
+
+Style/Documentation:
+  Exclude:
+    - 'spec/**/*'
+    - 'test/**/*'
+    - 'app/controllers/*_controller.rb'
+    - 'app/helpers/*_helper.rb'
+    - 'app/mailers/*_mailer.rb'
+    - 'app/models/application_record.rb'
+    - 'config/application.rb'
+
+Metrics/LineLength:
+  Exclude:
+    - 'spec/**/*'
+    - 'config/**/*'
+
+      

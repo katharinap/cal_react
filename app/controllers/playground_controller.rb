@@ -1,4 +1,3 @@
 class PlaygroundController < ApplicationController
-  def index
-  end
+  def index; end
 end
